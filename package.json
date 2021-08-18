@@ -18,5 +18,30 @@
   "homepage": "https://github.com/MoonJuhan/mj-slack-bot#readme",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "babel-eslint"
+    },
+    "rules": {
+      "no-unused-vars": "off",
+      "no-empty": "off",
+      "no-undef": "off",
+      "vue/return-in-computed-property": "off",
+      "vue/no-side-effects-in-computed-properties": "off"
+    }
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false,
+    "trailingComma": "es5"
   }
 }
