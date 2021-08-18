@@ -1,32 +1,12 @@
 const express = require('express')
 const app = express()
 
-const Slack = require('slack-node')
+const { WebClient } = require('@slack/web-api')
 
 // 생성한 token
-const API_TOKEN = process.env.token
+const API_TOKEN = process.env.TOKEN
 
-const slack = new Slack(API_TOKEN)
-
-const send = async (sender, message) => {
-  slack.api(
-    'chat.postMessage',
-    {
-      text: `${sender}:\n${message}`,
-      channel: '#general',
-      icon_emoji: 'slack',
-    },
-    (error, response) => {
-      if (error) {
-        console.log(error)
-        return
-      }
-      console.log(response)
-    }
-  )
-}
-
-
+const web = new WebClient(API_TOKEN)
 
 app.get('/api', (req, res) => {
   const path = `PATH`
@@ -35,14 +15,17 @@ app.get('/api', (req, res) => {
   res.end(`Hello! Go to item: <a>${path}</a>`)
 })
 
-app.get('/api/test', async (req, res) => {
-  await send('user1', 'send message')
+app.post('/api/slack/event', (req, res) => {
+  const body = req.body
+  const event = body.event
 
-  res.setHeader('Content-Type', 'application/json')
-  const testJSON = {
-    key: 'value',
-  }
-  res.json(testJSON)
+  web.chat
+    .postMessage({ channel: event.channel, text: '안녕하세요.' })
+    .then((result) => {
+      console.log('Message sent: ' + result.ts)
+    })
+
+  res.send(body.challenge)
 })
 
 module.exports = app
