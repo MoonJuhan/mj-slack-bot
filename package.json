@@ -17,7 +17,8 @@
   },
   "homepage": "https://github.com/MoonJuhan/mj-slack-bot#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "slack-node": "^0.1.8"
   },
   "eslintConfig": {
     "root": true,
