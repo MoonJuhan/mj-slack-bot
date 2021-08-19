@@ -21,18 +21,22 @@ app.get('/api', (req, res) => {
 app.post('/api/slack/event', (req, res) => {
   console.log('API POST Call')
   console.log(req.body)
-  
-  if (req.body.challenge && req.body.type == 'url_verification') {
-    res.json({ challenge: req.body.challenge })
+  const body = req.body
+
+  if (body.challenge && body.type === 'url_verification') {
+    res.json({ challenge: body.challenge })
+  } else if (body.type === 'event_callback') {
+    const event = body.event
+
+    console.log(event)
+
+    web.chat
+      .postMessage({ channel: event.channel, text: '안녕하세요.' })
+      .then((result) => {
+        console.log('Message sent: ' + result.ts)
+        res.sendStatus(200)
+      })
   }
-
-  // web.chat
-  //   .postMessage({ channel: event.channel, text: '안녕하세요.' })
-  //   .then((result) => {
-  //     console.log('Message sent: ' + result.ts)
-  //   })
-
-  // res.json({challenge: body.challenge})
 })
 
 module.exports = app
