@@ -25,7 +25,7 @@ app.post('/api/slack/event', (req, res) => {
       console.log('Message sent: ' + result.ts)
     })
 
-  res.send(body.challenge)
+  res.json({challenge: body.challenge})
 })
 
 module.exports = app
