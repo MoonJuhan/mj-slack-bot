@@ -1,5 +1,7 @@
 const express = require('express')
+
 const app = express()
+app.use(express.json())
 
 const { WebClient } = require('@slack/web-api')
 
@@ -28,7 +30,7 @@ app.post('/api/slack/event', (req, res) => {
   //   })
 
   // res.json({challenge: body.challenge})
-  res.json({challenge:'hello'})
+  res.json({ challenge: 'hello' })
 })
 
 module.exports = app
