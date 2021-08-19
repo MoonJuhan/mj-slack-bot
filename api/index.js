@@ -20,8 +20,11 @@ app.get('/api', (req, res) => {
 
 app.post('/api/slack/event', (req, res) => {
   console.log('API POST Call')
-  console.log(req)
   console.log(req.body)
+  
+  if (req.body.challenge && req.body.type == 'url_verification') {
+    res.json({ challenge: req.body.challenge })
+  }
 
   // web.chat
   //   .postMessage({ channel: event.channel, text: '안녕하세요.' })
@@ -30,7 +33,6 @@ app.post('/api/slack/event', (req, res) => {
   //   })
 
   // res.json({challenge: body.challenge})
-  res.json({ challenge: 'hello' })
 })
 
 module.exports = app
