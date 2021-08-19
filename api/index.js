@@ -19,6 +19,7 @@ app.get('/api', (req, res) => {
 app.post('/api/slack/event', (req, res) => {
   console.log('API POST Call')
   console.log(req)
+  console.log(req.body)
 
   // web.chat
   //   .postMessage({ channel: event.channel, text: '안녕하세요.' })
