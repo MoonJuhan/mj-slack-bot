@@ -30,12 +30,18 @@ app.post('/api/slack/event', (req, res) => {
 
     console.log(event)
 
-    web.chat
-      .postMessage({ channel: event.channel, text: '안녕하세요.' })
-      .then((result) => {
-        console.log('Message sent: ' + result.ts)
-        res.sendStatus(200)
-      })
+    console.log(web)
+    try {
+      web.chat
+        .postMessage({ channel: event.channel, text: '안녕하세요.' })
+        .then((result) => {
+          console.log('Message sent: ' + result.ts)
+        })
+    } catch (error) {
+      console.log(error)
+    }
+
+    res.sendStatus(200)
   }
 })
 
