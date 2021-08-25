@@ -2,31 +2,35 @@ const { getSheetData } = require('./sheet')
 const getMessage = require('./message')
 
 const commandLunch = async (string) => {
-  const nextCommand = string.split('--lunch ')[1].split(' ')
-  if (nextCommand.join(' ').indexOf('-') !== -1) {
-    switch (nextCommand[0]) {
-      case '-help':
-        return getMessage('LUNCH_HELP')
-        break
-      case '-random':
-        return await getRandom()
-        break
-      case '-category':
-        let returnText = ''
-        const categories = await getCategories()
-        if (nextCommand[1]) {
-          const category = nextCommand[1]
-          if (categories.indexOf(category) !== -1) {
-            return await getRandom(category)
-          }else {
-            returnText += '입력한 카테고리의 식당이 없습니다.\n'
+  if (string.indexOf('--lunch ') !== -1) {
+    const nextCommand = string.split('--lunch ')[1].split(' ')
+    if (nextCommand.join(' ').indexOf('-') !== -1) {
+      switch (nextCommand[0]) {
+        case '-help':
+          return getMessage('LUNCH_HELP')
+          break
+        case '-random':
+          return await getRandom()
+          break
+        case '-category':
+          let returnText = ''
+          const categories = await getCategories()
+          if (nextCommand[1]) {
+            const category = nextCommand[1]
+            if (categories.indexOf(category) !== -1) {
+              return await getRandom(category)
+            } else {
+              returnText += '입력한 카테고리의 식당이 없습니다.\n'
+            }
           }
-        }
-        return returnText + refineCategories(categories)
-        break
+          return returnText + refineCategories(categories)
+          break
+      }
+      // 사용법 설명
+      return getMessage('LUNCH_HELP')
+    } else {
+      return getMessage('LUNCH')
     }
-    // 사용법 설명
-    return getMessage('LUNCH_HELP')
   } else {
     return getMessage('LUNCH')
   }
