@@ -45,4 +45,42 @@ app.post('/api/slack/event', async (req, res) => {
   }
 })
 
+
+const commandUpdata = async (channel, user) => {
+  if (user === ADMIN) {
+    try {
+      await sendMessage(channel, getMessage('UPDATE_START'))
+      const sheetData = await getSheetData()
+      let writeData = []
+
+      for (let i = 1; i < 46; i++) {
+        const { isEnd, newData } = await getRestaurantData(i)
+        const refineData = await refineRestaurants(
+          sheetData,
+          newData,
+          writeData
+        )
+
+        writeData = writeData.concat(refineData)
+        if (isEnd) break
+      }
+
+      await writeSheetData(writeData)
+      return `DB 업데이트를 완료하였습니다. \n총 ${writeData.length}개의 식당을 업데이트 새로 찾았습니다.`
+    } catch (error) {
+      console.log(error)
+      return getMessage('UPDATE_FAILURE')
+    }
+  } else {
+    return getMessage('UPDATE_NO_AUTH')
+  }
+}
+
+const refineRestaurants = async (sheetData, newData, writeData) => {
+  const refineData = newData
+    .filter((el) => sheetData.find((e) => e.name === el.name) === undefined)
+    .filter((el) => writeData.find((e) => e.name === el.name) === undefined)
+
+  return refineData
+}
 module.exports = app
