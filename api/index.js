@@ -1,25 +1,20 @@
 const express = require('express')
+const { WebClient } = require('@slack/web-api')
+
+const API_TOKEN = process.env.token
+const ADMIN = process.env.admin
+
+const web = new WebClient(API_TOKEN)
+
+const { getSheetData, writeSheetData } = require('./sheet')
+const getRestaurantData = require('./kakao')
+const getMessage = require('./message')
+const commandLunch = require('./restaurants')
 
 const app = express()
 app.use(express.json())
 
-const { WebClient } = require('@slack/web-api')
-
-const API_TOKEN = process.env.token
-
-const web = new WebClient(API_TOKEN)
-
-app.get('/api', (req, res) => {
-  console.log('API Call')
-  const path = `PATH`
-  res.setHeader('Content-Type', 'text/html')
-  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate')
-  res.end(`Hello! Go to item: <a>${path}</a>`)
-})
-
 app.post('/api/slack/event', async (req, res) => {
-  console.log('API POST Call')
-  console.log(req.body)
   const body = req.body
 
   if (body.challenge && body.type === 'url_verification') {
