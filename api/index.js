@@ -24,22 +24,40 @@ app.post('/api/slack/event', async (req, res) => {
 
     console.log(event)
 
+    const text = await refineText(event)
+
     try {
-      console.log('chat start')
-      await web.chat
-        .postMessage({ channel: event.channel, text: '안녕하세요.' })
-        .then((result) => {
-          console.log('Message sent: ' + result.ts)
-        })
-      console.log('chat end')
+      await sendMessage(event.channel, text)
+      res.sendStatus(200)
     } catch (error) {
       console.log(error)
+      res.sendStatus(500)
     }
-    console.log('END')
-    res.sendStatus(200)
   }
 })
 
+const sendMessage = async (channel, text) => {
+  await web.chat
+    .postMessage({ channel, text, unfurl_media: false })
+    .then((result) => {
+      console.log('Message sent: ' + result.ts)
+    })
+}
+
+const refineText = async ({ channel, text, user }) => {
+  const command =
+    text.indexOf('--') !== -1 ? text.split('--')[1].split(' ')[0] : false
+
+  if (command === 'help') {
+    return getMessage('HELP')
+  } else if (command === 'lunch') {
+    return await commandLunch(text)
+  } else if (command === 'update') {
+    return commandUpdata(channel, user)
+  } else {
+    return getMessage('RANDOM')
+  }
+}
 
 const commandUpdata = async (channel, user) => {
   if (user === ADMIN) {
@@ -78,4 +96,5 @@ const refineRestaurants = async (sheetData, newData, writeData) => {
 
   return refineData
 }
+
 module.exports = app
