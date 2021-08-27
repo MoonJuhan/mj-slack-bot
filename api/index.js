@@ -16,8 +16,8 @@ app.use(express.json())
 
 app.post('/api/slack/event', async (req, res) => {
   const body = req.body
-  console.log(req.headers)
-  console.log('START')
+  console.log(req.headers['x-slack-retry-num'])
+  console.log('START', new Date())
 
   if (body.challenge && body.type === 'url_verification') {
     res.json({ challenge: body.challenge })
@@ -30,7 +30,7 @@ app.post('/api/slack/event', async (req, res) => {
 
     try {
       await sendMessage(event.channel, text)
-      console.log('END')
+      console.log('END', new Date())
       res.sendStatus(200)
       console.log('is end?')
     } catch (error) {
