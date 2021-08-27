@@ -16,6 +16,7 @@ app.use(express.json())
 
 app.post('/api/slack/event', async (req, res) => {
   const body = req.body
+  console.log('START')
 
   if (body.challenge && body.type === 'url_verification') {
     res.json({ challenge: body.challenge })
@@ -28,7 +29,9 @@ app.post('/api/slack/event', async (req, res) => {
 
     try {
       await sendMessage(event.channel, text)
+      console.log('END')
       res.sendStatus(200)
+      console.log('is end?')
     } catch (error) {
       console.log(error)
       res.sendStatus(500)
@@ -40,7 +43,7 @@ const sendMessage = async (channel, text) => {
   await web.chat
     .postMessage({ channel, text, unfurl_media: false })
     .then((result) => {
-      console.log('Message sent: ' + result.ts)
+      console.log(`Message sent: ${Math.floor(result.ts / 10000000) / 100}sec`)
     })
 }
 
