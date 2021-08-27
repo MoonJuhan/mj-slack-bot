@@ -21,7 +21,7 @@ app.post('/api/slack/event', async (req, res) => {
 
   if (body.challenge && body.type === 'url_verification') {
     res.json({ challenge: body.challenge })
-  } else if (body.type === 'event_callback') {
+  } else if (body.type === 'event_callback' && !req.headers['x-slack-retry-num']) {
     const event = body.event
 
     console.log(event)
@@ -37,6 +37,8 @@ app.post('/api/slack/event', async (req, res) => {
       console.log(error)
       res.sendStatus(500)
     }
+  }else {
+    res.sendStatus(200)
   }
 })
 
