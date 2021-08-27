@@ -16,6 +16,7 @@ app.use(express.json())
 
 app.post('/api/slack/event', async (req, res) => {
   const body = req.body
+  console.log(req.headers)
   console.log('START')
 
   if (body.challenge && body.type === 'url_verification') {
