@@ -3,6 +3,7 @@ const { WebClient } = require('@slack/web-api')
 
 const API_TOKEN = process.env.token
 const ADMIN = process.env.admin
+const BOT = process.env.botId
 
 const web = new WebClient(API_TOKEN)
 
@@ -27,7 +28,8 @@ app.post('/api/slack/event', async (req, res) => {
     res.json({ challenge: body.challenge })
   } else if (
     body.type === 'event_callback' &&
-    !req.headers['x-slack-retry-num']
+    !req.headers['x-slack-retry-num'] &&
+    body.event.user !== BOT
   ) {
     const event = body.event
 
@@ -43,7 +45,7 @@ app.post('/api/slack/event', async (req, res) => {
       res.sendStatus(500)
     }
   } else {
-    console.log('What is this?')
+    console.log('What is this? or Bot Id Check')
     res.sendStatus(200)
   }
 })
