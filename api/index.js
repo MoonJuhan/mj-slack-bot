@@ -16,6 +16,9 @@ app.use(express.json())
 
 app.post('/api/slack/event', async (req, res) => {
   const body = req.body
+  
+  console.log(body)
+
   if (body.challenge && body.type === 'url_verification') {
     res.json({ challenge: body.challenge })
   } else if (body.type === 'event_callback' && !req.headers['x-slack-retry-num']) {
