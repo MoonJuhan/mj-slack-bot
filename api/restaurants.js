@@ -13,7 +13,7 @@ const commandLunch = async (string) => {
           return await getRandom()
           break
         case '-category':
-          let returnText = ''
+          let returnText = 'MJ Slack Bot Recommend \n'
           const categories = await getCategories()
           if (nextCommand[1]) {
             const category = nextCommand[1]
@@ -51,7 +51,9 @@ const getRandom = async (category) => {
       if (randomIndex.indexOf(random) === -1) randomIndex.push(random)
     }
 
-    let returnText = ''
+    let returnText = 'MJ Slack Bot Recommend \n'
+
+    console.log(randomIndex)
 
     randomIndex.forEach((i) => {
       returnText += restaurantMessage(sheetData[i])
@@ -65,7 +67,7 @@ const getRandom = async (category) => {
 }
 
 const restaurantMessage = (restaurant) => {
-  return `${restaurant.category1} <${restaurant.url}|${
+  return `- ${restaurant.category1} <${restaurant.url}|${
     restaurant.name
   }> ${Math.ceil(restaurant.distance / 15)}min`
 }

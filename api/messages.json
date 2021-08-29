@@ -1,10 +1,10 @@
 {
-  "HELP": "MJ Slack Bot Command \n --help : 도움! \n --lunch : 점심 메뉴 정하기",
-  "ERROR": "커맨드 오류 발생",
-  "LUNCH": ["점심 뭐먹지~", "다음 커맨드를 입력해 주세요."],
-  "LUNCH_HELP": "MJ Slack Bot Lunch Command \n --lunch -help : 도움! \n --lunch -random : 랜덤 식당 추천 \n --lunch -category {분류} : 해당 분류 식당 추천",
+  "HELP": "MJ Slack Bot Command \n --help : 도움! \n --lunch -help : 점심 메뉴 정하기 도움! \n --lunch -random : 점심 메뉴 랜덤 추천 \n --lunch -category {분류} : 해당 분류 식당 추천",
+  "ERROR": "MJ Slack Bot Error \n 커맨드 오류 발생",
+  "LUNCH": ["점심 뭐먹지~", "다음 커맨드를 입력해주세요.", "커맨드를 모르면 -help를 입력해주세요."],
+  "LUNCH_HELP": "MJ Slack Bot Lunch Command \n --lunch -help : 점심 메뉴 정하기 도움! \n --lunch -random : 점심 메뉴 랜덤 추천 \n --lunch -category {분류} : 해당 분류 식당 추천",
   "RANDOM": ["안녕하세요.", "오늘 뭐먹지~"],
-  "UPDATE_START": "DB 업데이트 시작합니다.",
-  "UPDATE_FAILURE": "DB 업데이트에 실패하였습니다.",
-  "UPDATE_NO_AUTH": "DB 업데이트는 어드민 유저만 가능합니다."
+  "UPDATE_START": "MJ Slack Bot Update \n DB 업데이트 시작합니다.",
+  "UPDATE_FAILURE": "MJ Slack Bot Update \n DB 업데이트에 실패하였습니다.",
+  "UPDATE_NO_AUTH": "MJ Slack Bot Update \n DB 업데이트는 어드민 유저만 가능합니다."
 }
