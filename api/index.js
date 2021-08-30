@@ -35,10 +35,10 @@ app.post('/api/slack/event', async (req, res) => {
 
     console.log(event)
 
-    const text = await refineText(event)
+    const { text, blocks } = await refineText(event)
 
     try {
-      await sendMessage(event.channel, text)
+      await sendMessage(event.channel, text, blocks)
       res.sendStatus(200)
     } catch (error) {
       console.log(error)
@@ -50,9 +50,9 @@ app.post('/api/slack/event', async (req, res) => {
   }
 })
 
-const sendMessage = async (channel, text) => {
+const sendMessage = async (channel, text, blocks) => {
   await web.chat
-    .postMessage({ channel, text, unfurl_media: false })
+    .postMessage({ channel, text, unfurl_media: false, blocks })
     .then((result) => {
       console.log(`Message sent: ${Math.floor(result.ts / 10000000) / 100}sec`)
     })
@@ -63,13 +63,60 @@ const refineText = async ({ channel, text, user }) => {
     text.indexOf('--') !== -1 ? text.split('--')[1].split(' ')[0] : false
 
   if (command === 'help') {
-    return getMessage('HELP')
+    return { text: getMessage('HELP') }
   } else if (command === 'lunch') {
-    return await commandLunch(text)
+    return { text: await commandLunch(text) }
   } else if (command === 'update') {
-    return commandUpdata(channel, user)
+    return { text: commandUpdata(channel, user) }
+  } else if (command == 'test') {
+    return {
+      text: 'hello',
+      blocks: [
+        {
+          type: 'actions',
+          elements: [
+            {
+              type: 'button',
+              text: {
+                type: 'plain_text',
+                text: 'Help',
+              },
+              value: 'cancel',
+              action_id: 'button_1',
+            },
+            {
+              type: 'button',
+              text: {
+                type: 'plain_text',
+                text: 'Lunch Help',
+              },
+              value: 'cancel',
+              action_id: 'button_2',
+            },
+            {
+              type: 'button',
+              text: {
+                type: 'plain_text',
+                text: 'Lunch Random',
+              },
+              value: 'cancel',
+              action_id: 'button_3',
+            },
+            {
+              type: 'button',
+              text: {
+                type: 'plain_text',
+                text: 'Lunch Category',
+              },
+              value: 'cancel',
+              action_id: 'button_4',
+            },
+          ],
+        },
+      ],
+    }
   } else {
-    return getMessage('RANDOM')
+    return { text: getMessage('RANDOM') }
   }
 }
 
