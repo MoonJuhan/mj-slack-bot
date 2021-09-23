@@ -45,6 +45,7 @@ app.post('/api/slack/event', async (req, res) => {
       res.sendStatus(500)
     }
   } else {
+    console.log(req)
     console.log('What is this? or Bot Id Check')
     res.sendStatus(200)
   }
@@ -79,19 +80,10 @@ const refineText = async ({ channel, text, user }) => {
               type: 'button',
               text: {
                 type: 'plain_text',
-                text: 'Help',
+                text: 'About',
               },
-              value: 'cancel',
+              value: 'button_about',
               action_id: 'button_1',
-            },
-            {
-              type: 'button',
-              text: {
-                type: 'plain_text',
-                text: 'Lunch Help',
-              },
-              value: 'cancel',
-              action_id: 'button_2',
             },
             {
               type: 'button',
@@ -99,8 +91,8 @@ const refineText = async ({ channel, text, user }) => {
                 type: 'plain_text',
                 text: 'Lunch Random',
               },
-              value: 'cancel',
-              action_id: 'button_3',
+              value: 'button_random',
+              action_id: 'button_2',
             },
             {
               type: 'button',
@@ -108,8 +100,8 @@ const refineText = async ({ channel, text, user }) => {
                 type: 'plain_text',
                 text: 'Lunch Category',
               },
-              value: 'cancel',
-              action_id: 'button_4',
+              value: 'button_category',
+              action_id: 'button_3',
             },
           ],
         },
