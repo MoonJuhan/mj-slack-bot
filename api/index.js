@@ -114,6 +114,15 @@ app.post('/api/slack/interactive', async (req, res) => {
     console.log('first Err')
   }
 
+  try {
+    console.log(`socket ${req.socket}`)
+    console.log(`httpVersionMajor ${req.httpVersionMajor}`)
+    console.log(`httpVersionMinor ${req.httpVersionMinor}`)
+    
+  } catch (error) {
+    console.log('second Err')
+  }
+
   res.sendStatus(200)
 })
 
