@@ -48,9 +48,8 @@ app.post('/api/slack/event', async (req, res) => {
 
 app.post('/api/slack/interactive', async (req, res) => {
   for (const [key, value] of Object.entries(req)) {
-    console.log(`${key}: ${JSON.stringify(value)}`)
+    console.log(`${key}: ${value}`)
     console.log('\n')
-    console.log(JSON.stringify(value).indexOf('block_actions'))
   }
 
   res.sendStatus(200)
