@@ -51,7 +51,7 @@ app.post('/api/slack/interactive', async (req, res) => {
     const t1 = { ...req }
 
     for (const [key, value] of Object.entries(t1)) {
-      console.log(`${key} ${JSON.stringify(value)}`)
+      console.log(`${key} ${value}`)
       console.log('\n')
     }
   } catch (error) {
