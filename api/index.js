@@ -26,11 +26,7 @@ app.post('/api/slack/event', async (req, res) => {
 
   if (body.challenge && body.type === 'url_verification') {
     res.json({ challenge: body.challenge })
-  } else if (
-    body.type === 'event_callback' &&
-    !req.headers['x-slack-retry-num'] &&
-    body.event.user !== BOT
-  ) {
+  } else if (body.type === 'event_callback' && !req.headers['x-slack-retry-num'] && body.event.user !== BOT) {
     const event = body.event
 
     console.log(event)
@@ -61,17 +57,15 @@ app.post('/api/slack/interactive', async (req, res) => {
 
   res.sendStatus(200)
 })
+
 const sendMessage = async (channel, text, blocks) => {
-  await web.chat
-    .postMessage({ channel, text, unfurl_media: false, blocks })
-    .then((result) => {
-      console.log(`Message sent: ${Math.floor(result.ts / 10000000) / 100}sec`)
-    })
+  await web.chat.postMessage({ channel, text, unfurl_media: false, blocks }).then((result) => {
+    console.log(`Message sent: ${Math.floor(result.ts / 10000000) / 100}sec`)
+  })
 }
 
 const refineText = async ({ channel, text, user }) => {
-  const command =
-    text.indexOf('--') !== -1 ? text.split('--')[1].split(' ')[0] : false
+  const command = text.indexOf('--') !== -1 ? text.split('--')[1].split(' ')[0] : false
 
   if (command === 'help') {
     return { text: getMessage('HELP') }
@@ -81,7 +75,6 @@ const refineText = async ({ channel, text, user }) => {
     return { text: commandUpdata(channel, user) }
   } else if (command == 'test') {
     return {
-      text: 'hello',
       blocks: [
         {
           type: 'actions',
@@ -114,6 +107,7 @@ const refineText = async ({ channel, text, user }) => {
               action_id: 'button_3',
             },
           ],
+          block_id: 'testBlock',
         },
       ],
     }
@@ -131,11 +125,7 @@ const commandUpdata = async (channel, user) => {
 
       for (let i = 1; i < 46; i++) {
         const { isEnd, newData } = await getRestaurantData(i)
-        const refineData = await refineRestaurants(
-          sheetData,
-          newData,
-          writeData
-        )
+        const refineData = await refineRestaurants(sheetData, newData, writeData)
 
         writeData = writeData.concat(refineData)
         if (isEnd) break

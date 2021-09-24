@@ -41,11 +41,7 @@ const getRandom = async (category) => {
   const randomIndex = []
 
   if (sheetData.length > 0) {
-    while (
-      sheetData.length > 5
-        ? randomIndex.length < 5
-        : randomIndex.length < sheetData.length
-    ) {
+    while (sheetData.length > 5 ? randomIndex.length < 5 : randomIndex.length < sheetData.length) {
       const random = Math.ceil(Math.random() * sheetData.length) - 1
 
       if (randomIndex.indexOf(random) === -1) randomIndex.push(random)
@@ -67,9 +63,7 @@ const getRandom = async (category) => {
 }
 
 const restaurantMessage = (restaurant) => {
-  return `- ${restaurant.category1} <${restaurant.url}|${
-    restaurant.name
-  }> ${Math.ceil(restaurant.distance / 15)}min`
+  return `- ${restaurant.category1} <${restaurant.url}|${restaurant.name}> ${Math.ceil(restaurant.distance / 15)}min`
 }
 
 const getCategories = async () => {

@@ -28,9 +28,7 @@ const getRestaurantData = async (page) => {
       const distanceX = Math.abs((companyX - parseFloat(x)) * 100000)
       const distanceY = Math.abs((companyY - parseFloat(y)) * 100000)
 
-      return Math.floor(
-        Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2))
-      )
+      return Math.floor(Math.sqrt(Math.pow(distanceX, 2) + Math.pow(distanceY, 2)))
     }
 
     const refineData = data.documents.map((el) => {

@@ -13,9 +13,7 @@ const getSheetData = async (category) => {
     const { data } = await axios({
       method: 'get',
       url: `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?sheet=Restaurants${
-        category
-          ? '&tq=SELECT+*+WHERE+C+=+%27' + encodeURI(category) + '%27'
-          : ''
+        category ? '&tq=SELECT+*+WHERE+C+=+%27' + encodeURI(category) + '%27' : ''
       }`,
     })
 
@@ -56,11 +54,7 @@ const writeSheetData = async (params) => {
 
 const authorize = (credentials, token) => {
   const { client_secret, client_id, redirect_uris } = credentials.installed
-  const oAuth2Client = new google.auth.OAuth2(
-    client_id,
-    client_secret,
-    redirect_uris[0]
-  )
+  const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0])
 
   oAuth2Client.setCredentials(token)
   _auth = oAuth2Client
