@@ -45,12 +45,22 @@ app.post('/api/slack/event', async (req, res) => {
       res.sendStatus(500)
     }
   } else {
-    console.log(req)
     console.log('What is this? or Bot Id Check')
     res.sendStatus(200)
   }
 })
 
+app.post('/api/slack/interactive', async (req, res) => {
+  const body = req.body
+
+  console.log(body)
+
+  console.log('\n')
+
+  console.log(req.headers)
+
+  res.sendStatus(200)
+})
 const sendMessage = async (channel, text, blocks) => {
   await web.chat
     .postMessage({ channel, text, unfurl_media: false, blocks })
