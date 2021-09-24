@@ -49,22 +49,9 @@ app.post('/api/slack/event', async (req, res) => {
 app.post('/api/slack/interactive', async (req, res) => {
   try {
     const t1 = {
-      socket: req.socket,
-      httpVersion: req.httpVersion,
-      complete: req.complete,
       headers: req.headers,
-      rawHeaders: req.rawHeaders,
       trailers: req.trailers,
-      rawTrailers: req.rawTrailers,
-      aborted: req.aborted,
-      upgrade: req.upgrade,
-      url: req.url,
-      method: req.method,
-      statusCode: req.statusCode,
-      statusMessage: req.statusMessage,
       client: req.client,
-      _consuming: req._consuming,
-      _dumped: req._dumped,
       _parsedUrl: req._parsedUrl,
       params: req.params,
       query: req.query,
@@ -74,9 +61,9 @@ app.post('/api/slack/interactive', async (req, res) => {
 
     for (const [key, value] of Object.entries(t1)) {
       try {
-        console.log(`${key} ${value} ${typeof value}`)
+        console.log(`${key} ${JSON.stringify(value)}`)
       } catch (error) {
-        console.log(`${key} ERR`)
+        console.log(`${key} ERR  ${typeof value}`)
       }
       console.log('\n')
     }
