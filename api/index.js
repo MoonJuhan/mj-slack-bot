@@ -50,8 +50,6 @@ app.post('/api/slack/interactive', async (req, res) => {
   try {
     const t1 = {
       socket: req.socket,
-      httpVersionMajor: req.httpVersionMajor,
-      httpVersionMinor: req.httpVersionMinor,
       httpVersion: req.httpVersion,
       complete: req.complete,
       headers: req.headers,
@@ -67,19 +65,15 @@ app.post('/api/slack/interactive', async (req, res) => {
       client: req.client,
       _consuming: req._consuming,
       _dumped: req._dumped,
-      next: req.next,
-      baseUrl: req.baseUrl,
-      originalUrl: req.originalUrl,
       _parsedUrl: req._parsedUrl,
       params: req.params,
       query: req.query,
-      res: req.res,
       body: req.body,
       route: req.route,
     }
 
     for (const [key, value] of Object.entries(t1)) {
-      console.log(`${key} ${value}`)
+      console.log(`${key} ${typeof value === 'object' ? JSON.stringify(value) : value}`)
       console.log('\n')
     }
 
@@ -112,15 +106,6 @@ app.post('/api/slack/interactive', async (req, res) => {
     // route
   } catch (error) {
     console.log('first Err')
-  }
-
-  try {
-    console.log(`socket ${req.socket}`)
-    console.log(`httpVersionMajor ${req.httpVersionMajor}`)
-    console.log(`httpVersionMinor ${req.httpVersionMinor}`)
-    
-  } catch (error) {
-    console.log('second Err')
   }
 
   res.sendStatus(200)
