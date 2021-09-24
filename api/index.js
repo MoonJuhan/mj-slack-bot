@@ -47,7 +47,8 @@ app.post('/api/slack/event', async (req, res) => {
 })
 
 app.post('/api/slack/interactive', async (req, res) => {
-  const st = JSON.stringify(req)
+  console.log(typeof req)
+  const st = JSON.stringify('' + req)
   console.log(st)
   console.log('\n')
   console.log(st.indexOf('block_actions'))
