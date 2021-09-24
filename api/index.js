@@ -47,9 +47,20 @@ app.post('/api/slack/event', async (req, res) => {
 })
 
 app.post('/api/slack/interactive', async (req, res) => {
-  for (const [key, value] of Object.entries(req)) {
-    console.log(`${key}: ${value}`)
-    console.log('\n')
+  try {
+    const t1 = { ...req }
+
+    for (const [key, value] of Object.entries(t1)) {
+      console.log(`${key}: ${value}`)
+    }
+  } catch (error) {
+    console.log('first Err')
+  }
+
+  try {
+    console.log({ ...req })
+  } catch (error) {
+    console.log('second Err')
   }
 
   res.sendStatus(200)
