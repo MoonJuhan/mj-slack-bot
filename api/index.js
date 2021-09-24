@@ -48,12 +48,68 @@ app.post('/api/slack/event', async (req, res) => {
 
 app.post('/api/slack/interactive', async (req, res) => {
   try {
-    const t1 = { ...req }
+    const t1 = {
+      socket: req.socket,
+      httpVersionMajor: req.httpVersionMajor,
+      httpVersionMinor: req.httpVersionMinor,
+      httpVersion: req.httpVersion,
+      complete: req.complete,
+      headers: req.headers,
+      rawHeaders: req.rawHeaders,
+      trailers: req.trailers,
+      rawTrailers: req.rawTrailers,
+      aborted: req.aborted,
+      upgrade: req.upgrade,
+      url: req.url,
+      method: req.method,
+      statusCode: req.statusCode,
+      statusMessage: req.statusMessage,
+      client: req.client,
+      _consuming: req._consuming,
+      _dumped: req._dumped,
+      next: req.next,
+      baseUrl: req.baseUrl,
+      originalUrl: req.originalUrl,
+      _parsedUrl: req._parsedUrl,
+      params: req.params,
+      query: req.query,
+      res: req.res,
+      body: req.body,
+      route: req.route,
+    }
 
     for (const [key, value] of Object.entries(t1)) {
-      console.log(`${key}`)
+      console.log(`${key} ${value}`)
       console.log('\n')
     }
+
+    //     socket
+    // httpVersionMajor
+    // httpVersionMinor
+    // httpVersion
+    // complete
+    // headers
+    // rawHeaders
+    // trailers
+    // rawTrailers
+    // aborted
+    // upgrade
+    // url
+    // method
+    // statusCode
+    // statusMessage
+    // client
+    // _consuming
+    // _dumped
+    // next
+    // baseUrl
+    // originalUrl
+    // _parsedUrl
+    // params
+    // query
+    // res
+    // body
+    // route
   } catch (error) {
     console.log('first Err')
   }
