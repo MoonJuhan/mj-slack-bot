@@ -1,5 +1,6 @@
 const express = require('express')
 const { WebClient } = require('@slack/web-api')
+const qs = require('querystring')
 
 const API_TOKEN = process.env.token
 const ADMIN = process.env.admin
@@ -47,23 +48,22 @@ app.post('/api/slack/event', async (req, res) => {
 })
 
 app.post('/api/slack/interactive', async (req, res) => {
-  try {
-    try {
-      console.log(req.header)
-    } catch (error) {
-      console.log('ERR H')
-    }
+  var body = ''
 
-    console.log('\n')
+  req.on('data', function (data) {
+    body += data
+    console.log(body)
 
-    try {
-      console.log(req.client)
-    } catch (error) {
-      console.log('ERR C')
-    }
-  } catch (error) {
-    console.log('first Err')
-  }
+    // Too much POST data, kill the connection!
+    // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
+    if (body.length > 1e6) request.connection.destroy()
+  })
+
+  req.on('end', function () {
+    var post = qs.parse(body)
+    console.log(post)
+    // use post['blah'], etc.
+  })
 
   res.sendStatus(200)
 })
