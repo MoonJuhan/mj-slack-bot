@@ -47,13 +47,7 @@ app.post('/api/slack/event', async (req, res) => {
 })
 
 app.post('/api/slack/interactive', async (req, res) => {
-  const body = req.body
-
-  console.log(body)
-
-  console.log('\n')
-
-  console.log(req.headers)
+  console.log(req)
 
   res.sendStatus(200)
 })
@@ -75,6 +69,7 @@ const refineText = async ({ channel, text, user }) => {
     return { text: commandUpdata(channel, user) }
   } else if (command == 'test') {
     return {
+      test: 'Button Test',
       blocks: [
         {
           type: 'actions',
