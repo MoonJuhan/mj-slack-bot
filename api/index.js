@@ -48,20 +48,21 @@ app.post('/api/slack/event', async (req, res) => {
 })
 
 app.post('/api/slack/interactive', async (req, res) => {
-  var body = ''
+  let body = ''
 
   req.on('data', function (data) {
     body += data
-    console.log(body)
 
-    // Too much POST data, kill the connection!
-    // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
     if (body.length > 1e6) request.connection.destroy()
   })
 
   req.on('end', function () {
-    var post = qs.parse(body)
-    console.log(post)
+    const post = qs.parse(body)
+    console.log(post.payload)
+
+    console.log('\n')
+
+    console.log(post.actions)
     // use post['blah'], etc.
   })
 
