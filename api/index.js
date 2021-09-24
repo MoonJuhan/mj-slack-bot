@@ -51,16 +51,11 @@ app.post('/api/slack/interactive', async (req, res) => {
     const t1 = { ...req }
 
     for (const [key, value] of Object.entries(t1)) {
-      console.log(`${key}: ${value}`)
+      console.log(`${key}`)
+      console.log('\n')
     }
   } catch (error) {
     console.log('first Err')
-  }
-
-  try {
-    console.log({ ...req })
-  } catch (error) {
-    console.log('second Err')
   }
 
   res.sendStatus(200)
