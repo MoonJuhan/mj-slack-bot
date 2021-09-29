@@ -30,8 +30,6 @@ app.post('/api/slack/event', async (req, res) => {
   } else if (body.type === 'event_callback' && !req.headers['x-slack-retry-num'] && body.event.user !== BOT) {
     const event = body.event
 
-    console.log(event)
-
     const { text, blocks } = await refineText(event)
 
     try {
@@ -58,12 +56,24 @@ app.post('/api/slack/interactive', async (req, res) => {
 
   req.on('end', function () {
     const post = qs.parse(body)
-    console.log(post.payload)
+    const { channel, actions } = post.payload
 
-    console.log('\n')
+    console.log(actions)
 
-    console.log(post.actions)
-    // use post['blah'], etc.
+    switch (actions.value) {
+      case 'button_about':
+        console.log('ABOUT')
+        sendMessage(channel.id, getMessage('HELP'))
+        break
+      case 'button_random':
+        console.log('RANDOM')
+        sendMessage(channel.id, await commandLunch('--lunch -random'))
+        break
+      case 'button_category':
+        console.log('CATEGORY')
+        sendMessage(channel.id, await commandLunch('--lunch -category'))
+        break
+    }
   })
 
   res.sendStatus(200)
@@ -119,7 +129,6 @@ const refineText = async ({ channel, text, user }) => {
               action_id: 'button_3',
             },
           ],
-          block_id: 'testBlock',
         },
       ],
     }
