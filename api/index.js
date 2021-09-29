@@ -54,7 +54,7 @@ app.post('/api/slack/interactive', async (req, res) => {
     if (body.length > 1e6) request.connection.destroy()
   })
 
-  req.on('end', function () {
+  req.on('end', async () => {
     const post = qs.parse(body)
     const { channel, actions } = post.payload
 
