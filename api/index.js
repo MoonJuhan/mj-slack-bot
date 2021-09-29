@@ -56,8 +56,13 @@ app.post('/api/slack/interactive', async (req, res) => {
 
   req.on('end', async () => {
     const post = qs.parse(body)
-    const { channel, actions } = post.payload
+    const { channel, actions } = JSON.parse(post.payload)
 
+    console.log(typeof post.payload)
+    console.log(post.payload)
+    console.log('\n\n')
+    console.log(channel)
+    console.log('\n\n')
     console.log(actions)
 
     switch (actions.value) {
