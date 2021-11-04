@@ -76,15 +76,58 @@ app.post('/api/slack/interactive', async (req, res) => {
         break
       case 'button_category':
         console.log('CATEGORY')
-        await sendMessage(channel.id, await commandLunch('--lunch -category'))
+        // await sendMessage(channel.id, await commandLunch('--lunch -category'))
+        await sendMessage(channel.id, 'TEST', [
+          {
+            type: 'actions',
+            elements: [
+              {
+                type: 'section',
+                block_id: 'section678',
+                text: {
+                  type: 'mrkdwn',
+                  text: 'Pick an item from the dropdown list',
+                },
+                accessory: {
+                  action_id: 'text1234',
+                  type: 'static_select',
+                  placeholder: {
+                    type: 'plain_text',
+                    text: 'Select an item',
+                  },
+                  options: [
+                    {
+                      text: {
+                        type: 'plain_text',
+                        text: '*this is plain_text text*',
+                      },
+                      value: 'value-0',
+                    },
+                    {
+                      text: {
+                        type: 'plain_text',
+                        text: '*this is plain_text text*',
+                      },
+                      value: 'value-1',
+                    },
+                    {
+                      text: {
+                        type: 'plain_text',
+                        text: '*this is plain_text text*',
+                      },
+                      value: 'value-2',
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        ])
         break
     }
-    
+
     res.sendStatus(200)
   })
-
-  
-  
 })
 
 const sendMessage = async (channel, text, blocks) => {
