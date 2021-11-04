@@ -81,6 +81,7 @@ app.post('/api/slack/interactive', async (req, res) => {
     }
   })
 
+  console.log('Send Status!')
   res.sendStatus(200)
 })
 
