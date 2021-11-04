@@ -79,10 +79,12 @@ app.post('/api/slack/interactive', async (req, res) => {
         await sendMessage(channel.id, await commandLunch('--lunch -category'))
         break
     }
+    
+    res.sendStatus(200)
   })
 
-  console.log('Send Status!')
-  res.sendStatus(200)
+  
+  
 })
 
 const sendMessage = async (channel, text, blocks) => {
