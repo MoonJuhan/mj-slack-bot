@@ -21,6 +21,7 @@ const commandLunch = async (string) => {
               returnText += '입력한 카테고리의 식당이 없습니다.\n'
             }
           }
+
           return {
             text: returnText + refineCategories(categories),
             blocks: [
@@ -28,43 +29,39 @@ const commandLunch = async (string) => {
                 type: 'actions',
                 elements: [
                   {
-                    type: 'section',
-                    block_id: 'section678',
-                    text: {
-                      type: 'mrkdwn',
-                      text: 'Pick an item from the dropdown list',
+                    type: 'static_select',
+                    placeholder: {
+                      type: 'plain_text',
+                      text: 'Select an item',
+                      emoji: true,
                     },
-                    accessory: {
-                      action_id: 'text1234',
-                      type: 'static_select',
-                      placeholder: {
-                        type: 'plain_text',
-                        text: 'Select an item',
+                    options: [
+                      {
+                        text: {
+                          type: 'plain_text',
+                          text: '*this is plain_text text*',
+                          emoji: true,
+                        },
+                        value: 'value-0',
                       },
-                      options: [
-                        {
-                          text: {
-                            type: 'plain_text',
-                            text: '*this is plain_text text*',
-                          },
-                          value: 'value-0',
+                      {
+                        text: {
+                          type: 'plain_text',
+                          text: '*this is plain_text text*',
+                          emoji: true,
                         },
-                        {
-                          text: {
-                            type: 'plain_text',
-                            text: '*this is plain_text text*',
-                          },
-                          value: 'value-1',
+                        value: 'value-1',
+                      },
+                      {
+                        text: {
+                          type: 'plain_text',
+                          text: '*this is plain_text text*',
+                          emoji: true,
                         },
-                        {
-                          text: {
-                            type: 'plain_text',
-                            text: '*this is plain_text text*',
-                          },
-                          value: 'value-2',
-                        },
-                      ],
-                    },
+                        value: 'value-2',
+                      },
+                    ],
+                    action_id: 'actionId-3',
                   },
                 ],
               },
