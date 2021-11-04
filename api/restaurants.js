@@ -16,7 +16,7 @@ const commandLunch = async (string) => {
           if (nextCommand[1]) {
             const category = nextCommand[1]
             if (categories.indexOf(category) !== -1) {
-              return await getRandom(category)
+              return { text: await getRandom(category) }
             } else {
               returnText += '입력한 카테고리의 식당이 없습니다.\n'
             }
