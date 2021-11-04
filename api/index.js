@@ -12,6 +12,7 @@ const { getSheetData, writeSheetData } = require('./sheet')
 const getRestaurantData = require('./kakao')
 const getMessage = require('./message')
 const commandLunch = require('./restaurants')
+const manageInteractive = require('./manageInteractive')
 
 const app = express()
 app.use(express.json())
@@ -64,68 +65,8 @@ app.post('/api/slack/interactive', async (req, res) => {
     console.log('\n\n')
     console.log(actions)
 
-    switch (actions[0].value) {
-      case 'button_about':
-        console.log('ABOUT')
-        await sendMessage(channel.id, getMessage('HELP'))
-        break
-      case 'button_random':
-        console.log('RANDOM')
-        const { text } = await commandLunch('--lunch -random')
-        await sendMessage(channel.id, text)
-        break
-      case 'button_category':
-        console.log('CATEGORY')
-        const { text, blocks } = await commandLunch('--lunch -category')
-        await sendMessage(channel.id, text, blocks)
-        // await sendMessage(channel.id, 'TEST', [
-        //   {
-        //     type: 'actions',
-        //     elements: [
-        //       {
-        //         type: 'section',
-        //         block_id: 'section678',
-        //         text: {
-        //           type: 'mrkdwn',
-        //           text: 'Pick an item from the dropdown list',
-        //         },
-        //         accessory: {
-        //           action_id: 'text1234',
-        //           type: 'static_select',
-        //           placeholder: {
-        //             type: 'plain_text',
-        //             text: 'Select an item',
-        //           },
-        //           options: [
-        //             {
-        //               text: {
-        //                 type: 'plain_text',
-        //                 text: '*this is plain_text text*',
-        //               },
-        //               value: 'value-0',
-        //             },
-        //             {
-        //               text: {
-        //                 type: 'plain_text',
-        //                 text: '*this is plain_text text*',
-        //               },
-        //               value: 'value-1',
-        //             },
-        //             {
-        //               text: {
-        //                 type: 'plain_text',
-        //                 text: '*this is plain_text text*',
-        //               },
-        //               value: 'value-2',
-        //             },
-        //           ],
-        //         },
-        //       },
-        //     ],
-        //   },
-        // ])
-        break
-    }
+    const { text, blocks } = await manageInteractive(actions[0].value)
+    await sendMessage(channel.id, text, blocks)
 
     res.sendStatus(200)
   })
