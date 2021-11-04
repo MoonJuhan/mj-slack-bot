@@ -85,6 +85,7 @@ app.post('/api/slack/interactive', async (req, res) => {
 })
 
 const sendMessage = async (channel, text, blocks) => {
+  console.log(channel, text)
   await web.chat.postMessage({ channel, text, unfurl_media: false, blocks }).then((result) => {
     console.log(`Message sent: ${Math.floor(result.ts / 10000000) / 100}sec`)
   })
