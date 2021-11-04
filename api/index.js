@@ -58,7 +58,6 @@ app.post('/api/slack/interactive', async (req, res) => {
     const post = qs.parse(body)
     const { channel, actions } = JSON.parse(post.payload)
 
-    console.log(typeof post.payload)
     console.log(post.payload)
     console.log('\n\n')
     console.log(channel)
@@ -72,57 +71,59 @@ app.post('/api/slack/interactive', async (req, res) => {
         break
       case 'button_random':
         console.log('RANDOM')
-        await sendMessage(channel.id, await commandLunch('--lunch -random'))
+        const { text } = await commandLunch('--lunch -random')
+        await sendMessage(channel.id, text)
         break
       case 'button_category':
         console.log('CATEGORY')
-        // await sendMessage(channel.id, await commandLunch('--lunch -category'))
-        await sendMessage(channel.id, 'TEST', [
-          {
-            type: 'actions',
-            elements: [
-              {
-                type: 'section',
-                block_id: 'section678',
-                text: {
-                  type: 'mrkdwn',
-                  text: 'Pick an item from the dropdown list',
-                },
-                accessory: {
-                  action_id: 'text1234',
-                  type: 'static_select',
-                  placeholder: {
-                    type: 'plain_text',
-                    text: 'Select an item',
-                  },
-                  options: [
-                    {
-                      text: {
-                        type: 'plain_text',
-                        text: '*this is plain_text text*',
-                      },
-                      value: 'value-0',
-                    },
-                    {
-                      text: {
-                        type: 'plain_text',
-                        text: '*this is plain_text text*',
-                      },
-                      value: 'value-1',
-                    },
-                    {
-                      text: {
-                        type: 'plain_text',
-                        text: '*this is plain_text text*',
-                      },
-                      value: 'value-2',
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-        ])
+        const { text, blocks } = await commandLunch('--lunch -category')
+        await sendMessage(channel.id, text, blocks)
+        // await sendMessage(channel.id, 'TEST', [
+        //   {
+        //     type: 'actions',
+        //     elements: [
+        //       {
+        //         type: 'section',
+        //         block_id: 'section678',
+        //         text: {
+        //           type: 'mrkdwn',
+        //           text: 'Pick an item from the dropdown list',
+        //         },
+        //         accessory: {
+        //           action_id: 'text1234',
+        //           type: 'static_select',
+        //           placeholder: {
+        //             type: 'plain_text',
+        //             text: 'Select an item',
+        //           },
+        //           options: [
+        //             {
+        //               text: {
+        //                 type: 'plain_text',
+        //                 text: '*this is plain_text text*',
+        //               },
+        //               value: 'value-0',
+        //             },
+        //             {
+        //               text: {
+        //                 type: 'plain_text',
+        //                 text: '*this is plain_text text*',
+        //               },
+        //               value: 'value-1',
+        //             },
+        //             {
+        //               text: {
+        //                 type: 'plain_text',
+        //                 text: '*this is plain_text text*',
+        //               },
+        //               value: 'value-2',
+        //             },
+        //           ],
+        //         },
+        //       },
+        //     ],
+        //   },
+        // ])
         break
     }
 
@@ -131,7 +132,6 @@ app.post('/api/slack/interactive', async (req, res) => {
 })
 
 const sendMessage = async (channel, text, blocks) => {
-  console.log(channel, text)
   await web.chat.postMessage({ channel, text, unfurl_media: false, blocks }).then((result) => {
     console.log(`Message sent: ${Math.floor(result.ts / 10000000) / 100}sec`)
   })
@@ -143,7 +143,7 @@ const refineText = async ({ channel, text, user }) => {
   if (command === 'help') {
     return { text: getMessage('HELP') }
   } else if (command === 'lunch') {
-    return { text: await commandLunch(text) }
+    return await commandLunch(text)
   } else if (command === 'update') {
     return { text: commandUpdata(channel, user) }
   } else if (command == 'test') {

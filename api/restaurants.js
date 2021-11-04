@@ -7,9 +7,9 @@ const commandLunch = async (string) => {
     if (nextCommand.join(' ').indexOf('-') !== -1) {
       switch (nextCommand[0]) {
         case '-help':
-          return getMessage('LUNCH_HELP')
+          return { text: getMessage('LUNCH_HELP') }
         case '-random':
-          return await getRandom()
+          return { text: await getRandom() }
         case '-category':
           let returnText = 'MJ Slack Bot Recommend \n'
           const categories = await getCategories()
@@ -21,16 +21,63 @@ const commandLunch = async (string) => {
               returnText += '입력한 카테고리의 식당이 없습니다.\n'
             }
           }
-          return returnText + refineCategories(categories)
-          break
+          return {
+            text: returnText + refineCategories(categories),
+            blocks: [
+              {
+                type: 'actions',
+                elements: [
+                  {
+                    type: 'section',
+                    block_id: 'section678',
+                    text: {
+                      type: 'mrkdwn',
+                      text: 'Pick an item from the dropdown list',
+                    },
+                    accessory: {
+                      action_id: 'text1234',
+                      type: 'static_select',
+                      placeholder: {
+                        type: 'plain_text',
+                        text: 'Select an item',
+                      },
+                      options: [
+                        {
+                          text: {
+                            type: 'plain_text',
+                            text: '*this is plain_text text*',
+                          },
+                          value: 'value-0',
+                        },
+                        {
+                          text: {
+                            type: 'plain_text',
+                            text: '*this is plain_text text*',
+                          },
+                          value: 'value-1',
+                        },
+                        {
+                          text: {
+                            type: 'plain_text',
+                            text: '*this is plain_text text*',
+                          },
+                          value: 'value-2',
+                        },
+                      ],
+                    },
+                  },
+                ],
+              },
+            ],
+          }
       }
       // 사용법 설명
-      return getMessage('LUNCH_HELP')
+      return { text: getMessage('LUNCH_HELP') }
     } else {
-      return getMessage('LUNCH')
+      return { text: getMessage('LUNCH') }
     }
   } else {
-    return getMessage('LUNCH')
+    return { text: getMessage('LUNCH') }
   }
 }
 
