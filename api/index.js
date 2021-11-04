@@ -68,15 +68,15 @@ app.post('/api/slack/interactive', async (req, res) => {
     switch (actions[0].value) {
       case 'button_about':
         console.log('ABOUT')
-        sendMessage(channel.id, getMessage('HELP'))
+        await sendMessage(channel.id, getMessage('HELP'))
         break
       case 'button_random':
         console.log('RANDOM')
-        sendMessage(channel.id, await commandLunch('--lunch -random'))
+        await sendMessage(channel.id, await commandLunch('--lunch -random'))
         break
       case 'button_category':
         console.log('CATEGORY')
-        sendMessage(channel.id, await commandLunch('--lunch -category'))
+        await sendMessage(channel.id, await commandLunch('--lunch -category'))
         break
     }
   })
