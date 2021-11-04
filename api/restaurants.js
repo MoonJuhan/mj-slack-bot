@@ -8,10 +8,8 @@ const commandLunch = async (string) => {
       switch (nextCommand[0]) {
         case '-help':
           return getMessage('LUNCH_HELP')
-          break
         case '-random':
           return await getRandom()
-          break
         case '-category':
           let returnText = 'MJ Slack Bot Recommend \n'
           const categories = await getCategories()
