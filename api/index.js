@@ -65,7 +65,7 @@ app.post('/api/slack/interactive', async (req, res) => {
     console.log('\n\n')
     console.log(actions)
 
-    switch (actions.value) {
+    switch (actions[0].value) {
       case 'button_about':
         console.log('ABOUT')
         sendMessage(channel.id, getMessage('HELP'))
