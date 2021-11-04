@@ -1,6 +1,7 @@
 const commandLunch = require('./restaurants')
 
 const manageInteractive = async (command) => {
+  console.log(command)
   switch (command) {
     case 'button_about':
       return await buttonAbout()

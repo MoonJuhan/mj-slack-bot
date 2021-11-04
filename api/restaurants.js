@@ -22,6 +22,19 @@ const commandLunch = async (string) => {
             }
           }
 
+          const options = []
+
+          categories.forEach((el) => {
+            options.push({
+              text: {
+                type: 'plain_text',
+                text: el,
+                emoji: true,
+              },
+              value: el,
+            })
+          })
+
           return {
             text: returnText + refineCategories(categories),
             blocks: [
@@ -35,32 +48,7 @@ const commandLunch = async (string) => {
                       text: 'Select an item',
                       emoji: true,
                     },
-                    options: [
-                      {
-                        text: {
-                          type: 'plain_text',
-                          text: '*this is plain_text text*',
-                          emoji: true,
-                        },
-                        value: 'value-0',
-                      },
-                      {
-                        text: {
-                          type: 'plain_text',
-                          text: '*this is plain_text text*',
-                          emoji: true,
-                        },
-                        value: 'value-1',
-                      },
-                      {
-                        text: {
-                          type: 'plain_text',
-                          text: '*this is plain_text text*',
-                          emoji: true,
-                        },
-                        value: 'value-2',
-                      },
-                    ],
+                    options,
                     action_id: 'actionId-3',
                   },
                 ],
