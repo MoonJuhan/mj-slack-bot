@@ -2,6 +2,8 @@ const commandLunch = require('./restaurants')
 const getMessage = require('./message')
 
 const manageInteractive = async (action) => {
+  console.log('manageInteractive')
+  console.log(action)
   if (action.type === 'button') {
     return await manageButtonType(action.value)
   } else if (action.type === 'static_select') {
@@ -12,7 +14,7 @@ const manageInteractive = async (action) => {
 }
 
 const manageButtonType = async (value) => {
-  switch (action.value) {
+  switch (value) {
     case 'button_about':
       return await buttonAbout()
     case 'button_random':
