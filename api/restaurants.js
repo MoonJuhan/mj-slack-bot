@@ -39,17 +39,17 @@ const commandLunch = async (string) => {
             text: returnText + refineCategories(categories),
             blocks: [
               {
-                type: 'actions',
+                type: 'context',
                 elements: [
                   {
-                    type: 'context',
-                    elements: [
-                      {
-                        type: 'mrkdwn',
-                        text: returnText + refineCategories(categories),
-                      },
-                    ],
+                    type: 'mrkdwn',
+                    text: returnText + refineCategories(categories),
                   },
+                ],
+              },
+              {
+                type: 'actions',
+                elements: [
                   {
                     type: 'static_select',
                     placeholder: {
