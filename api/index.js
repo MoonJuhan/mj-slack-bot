@@ -65,7 +65,7 @@ app.post('/api/slack/interactive', async (req, res) => {
     console.log('\n\n')
     console.log(actions)
 
-    const { text, blocks } = await manageInteractive(actions[0].value)
+    const { text, blocks } = await manageInteractive(actions[0])
     await sendMessage(channel.id, text, blocks)
 
     res.sendStatus(200)
