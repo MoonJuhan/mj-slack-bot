@@ -155,7 +155,7 @@ const commandUpdata = async (channel, user) => {
       }
 
       await writeSheetData(writeData)
-      return `DB 업데이트를 완료하였습니다. \n총 ${writeData.length}개의 식당을 업데이트 새로 찾았습니다.`
+      return { text: `DB 업데이트를 완료하였습니다. \n총 ${writeData.length}개의 식당을 업데이트 새로 찾았습니다.` }
     } catch (error) {
       console.log(error)
       return getMessage('UPDATE_FAILURE')
