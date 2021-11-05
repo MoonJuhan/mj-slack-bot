@@ -86,7 +86,7 @@ const refineText = async ({ channel, text, user }) => {
   } else if (command === 'lunch') {
     return await commandLunch(text)
   } else if (command === 'update') {
-    return { text: commandUpdata(channel, user) }
+    return await commandUpdata(channel, user)
   } else if (command == 'test') {
     return {
       text: 'Button Test',
@@ -161,10 +161,10 @@ const commandUpdata = async (channel, user) => {
       return { text: `DB 업데이트를 완료하였습니다. \n총 ${writeData.length}개의 식당을 업데이트 새로 찾았습니다.` }
     } catch (error) {
       console.log(error)
-      return getMessage('UPDATE_FAILURE')
+      return { text: getMessage('UPDATE_FAILURE') }
     }
   } else {
-    return getMessage('UPDATE_NO_AUTH')
+    return { text: getMessage('UPDATE_NO_AUTH') }
   }
 }
 
