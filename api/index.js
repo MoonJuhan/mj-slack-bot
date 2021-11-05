@@ -96,7 +96,7 @@ const refineText = async ({ channel, text, user }) => {
           elements: [
             {
               type: 'mrkdwn',
-              text: '그냥 텍스트를 원해..',
+              text: '아래의 버튼을 눌러주세요',
             },
           ],
         },

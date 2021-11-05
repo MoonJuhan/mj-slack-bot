@@ -42,6 +42,15 @@ const commandLunch = async (string) => {
                 type: 'actions',
                 elements: [
                   {
+                    type: 'context',
+                    elements: [
+                      {
+                        type: 'mrkdwn',
+                        text: returnText + refineCategories(categories),
+                      },
+                    ],
+                  },
+                  {
                     type: 'static_select',
                     placeholder: {
                       type: 'plain_text',
