@@ -36,8 +36,8 @@ const buttonCategory = async () => {
   return await commandLunch('--lunch -category')
 }
 
-const manageSelectType = async (category) => {
-  return await commandLunch(`--lunch -category ${category}`)
+const manageSelectType = async (option) => {
+  return await commandLunch(`--lunch -category ${option.value}`)
 }
 
 module.exports = manageInteractive
