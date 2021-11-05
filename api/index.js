@@ -142,7 +142,9 @@ const refineText = async ({ channel, text, user }) => {
 const commandUpdata = async (channel, user) => {
   if (user === ADMIN) {
     try {
+      console.log('Command Update Start')
       await sendMessage(channel, getMessage('UPDATE_START'))
+      console.log('Send 01')
       const sheetData = await getSheetData()
       let writeData = []
 
@@ -155,6 +157,7 @@ const commandUpdata = async (channel, user) => {
       }
 
       await writeSheetData(writeData)
+      console.log('Command Update End')
       return { text: `DB 업데이트를 완료하였습니다. \n총 ${writeData.length}개의 식당을 업데이트 새로 찾았습니다.` }
     } catch (error) {
       console.log(error)
