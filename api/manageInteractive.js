@@ -1,4 +1,5 @@
 const commandLunch = require('./restaurants')
+const getMessage = require('./message')
 
 const manageInteractive = async (command) => {
   console.log(command)
