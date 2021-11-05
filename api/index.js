@@ -92,6 +92,15 @@ const refineText = async ({ channel, text, user }) => {
       text: 'Button Test',
       blocks: [
         {
+          type: 'context',
+          elements: [
+            {
+              type: 'mrkdwn',
+              text: '그냥 텍스트를 원해..',
+            },
+          ],
+        },
+        {
           type: 'actions',
           elements: [
             {
