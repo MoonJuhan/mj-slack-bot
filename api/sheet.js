@@ -47,6 +47,7 @@ const refindSheetsData = (string) => {
 }
 
 const writeSheetData = async (params) => {
+  console.log(writeSheetData)
   if (!_auth) authorize(GOOGLE_CREDENTIALS, GOOGLE_TOKEN)
 
   await callAppsScript(GOOGLE_SCRIPT_ID, 'writeRestaurantsData', params)
@@ -61,6 +62,7 @@ const authorize = (credentials, token) => {
 }
 
 const callAppsScript = async (scriptId, functionName, parameters) => {
+  console.log(callAppsScript)
   const script = google.script({ version: 'v1', auth: _auth })
 
   script.scripts.run(
@@ -73,6 +75,7 @@ const callAppsScript = async (scriptId, functionName, parameters) => {
       },
     },
     (err, res) => {
+      console.log('Call Apps Script Done')
       if (err) {
         console.log('The API returned an error: ' + err)
         return
